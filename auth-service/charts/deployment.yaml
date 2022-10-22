@@ -39,7 +39,7 @@ spec:
             - configMapRef:
                 name: auth-config
             - secretRef:
-                name: app-secrets
+                name: auth-secrets
       initContainers:
         - name: migrate
           image: 34234247632/auth-service:v1.0
@@ -49,4 +49,4 @@ spec:
             - configMapRef:
                 name: auth-config
             - secretRef:
-                name: app-secrets
+                name: auth-secrets

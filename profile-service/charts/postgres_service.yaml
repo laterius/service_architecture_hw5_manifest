@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-db-lb-profile
+  name: postgres-db-lb
 spec:
   selector:
-    app: postgresql-db-profile
+    app: postgresql-db
   type: LoadBalancer
   ports:
   - port: 5432
