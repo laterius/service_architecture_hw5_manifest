@@ -104,13 +104,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{profileUrl}}/profile/1",
+					"raw": "{{profileUrl}}/profile/{{userId}}",
 					"host": [
 						"{{profileUrl}}"
 					],
 					"path": [
 						"profile",
-						"1"
+						"{{userId}}"
 					]
 				}
 			},
@@ -281,7 +281,7 @@
 			"response": []
 		},
 		{
-			"name": "second user login Copy",
+			"name": "second user login",
 			"event": [
 				{
 					"listen": "test",
@@ -381,12 +381,12 @@
 	"variable": [
 		{
 			"key": "profileUrl",
-			"value": "arch.homework:31471",
+			"value": "arch.homework",
 			"type": "string"
 		},
 		{
 			"key": "authUrl",
-			"value": "arch.homework:30643",
+			"value": "arch.homework",
 			"type": "string"
 		},
 		{
