@@ -1,0 +1,397 @@
+{
+	"info": {
+		"_postman_id": "cc109cc3-2ab4-40f4-ba80-b717ecb5ad26",
+		"name": "Backend for frontends",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8551747"
+	},
+	"item": [
+		{
+			"name": "first user registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)",
+							"pm.collectionVariables.set(\"userId\", responseJSON[\"id\"])",
+							"",
+							"pm.test(\"check response\", function () {",
+							"    pm.expect(pm.response.code).to.eql(201)",
+							"",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.username).to.eql(\"lat\");",
+							"    pm.expect(jsonData.firstName).to.eql(\"Denis\");",
+							"    pm.expect(jsonData.lastName).to.eql(\"Glukhov\");",
+							"    pm.expect(jsonData.email).to.eql(\"denis.glukhov@mail.ru\");",
+							"    pm.expect(jsonData.phone).to.eql(\"+1111111111\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"lat\",\n    \"firstName\": \"Denis\",\n    \"lastName\": \"Glukhov\",\n    \"email\": \"denis.glukhov@mail.ru\",\n    \"phone\": \"+1111111111\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{profileUrl}}/signup",
+					"host": [
+						"{{profileUrl}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check logout\", function () {",
+							"    pm.expect(pm.response.code).to.eql(200)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{authUrl}}/logout",
+					"host": [
+						"{{authUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check access to profile without login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", () => {",
+							"  pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{profileUrl}}/profile/1",
+					"host": [
+						"{{profileUrl}}"
+					],
+					"path": [
+						"profile",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "first user login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Cookie remember_token is present\", () => {",
+							"  pm.expect(pm.cookies.has('remember_token')).to.be.true;",
+							"});",
+							"",
+							"// pm.collectionVariables.set(\"remember_token\", pm.cookies.get('remember_token'))",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"lat\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{authUrl}}/login",
+					"host": [
+						"{{authUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change first user profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check changing\", function () {",
+							"    pm.expect(pm.response.code).to.eql(200)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"lat\",\n    \"firstName\": \"Denis\",\n    \"lastName\": \"Glukhov\",\n    \"email\": \"denis.glukhov@mail.ru\",\n    \"phone\": \"+22222\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{profileUrl}}/profile",
+					"host": [
+						"{{profileUrl}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check logout\", function () {",
+							"    pm.expect(pm.response.code).to.eql(200)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{authUrl}}/logout",
+					"host": [
+						"{{authUrl}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "second user registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)",
+							"pm.collectionVariables.set(\"userId\", responseJSON[\"id\"])",
+							"",
+							"pm.test(\"check response\", function () {",
+							"    pm.expect(pm.response.code).to.eql(201)",
+							"",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.username).to.eql(\"petr\");",
+							"    pm.expect(jsonData.firstName).to.eql(\"Petr\");",
+							"    pm.expect(jsonData.lastName).to.eql(\"Subom\");",
+							"    pm.expect(jsonData.email).to.eql(\"petr.subon@mail.ru\");",
+							"    pm.expect(jsonData.phone).to.eql(\"+33333333\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"petr\",\n    \"firstName\": \"Petr\",\n    \"lastName\": \"Subom\",\n    \"email\": \"petr.subon@mail.ru\",\n    \"phone\": \"+33333333\",\n    \"password\": \"456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{profileUrl}}/signup",
+					"host": [
+						"{{profileUrl}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "second user login Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Cookie remember_token is present\", () => {",
+							"  pm.expect(pm.cookies.has('remember_token')).to.be.true;",
+							"});",
+							"",
+							"// pm.collectionVariables.set(\"remember_token\", pm.cookies.get('remember_token'))",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"petr\",\n    \"password\": \"456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{authUrl}}/login",
+					"host": [
+						"{{authUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check access to someone else's profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", () => {",
+							"  pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{profileUrl}}/profile/1",
+					"host": [
+						"{{profileUrl}}"
+					],
+					"path": [
+						"profile",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "profileUrl",
+			"value": "arch.homework:31471",
+			"type": "string"
+		},
+		{
+			"key": "authUrl",
+			"value": "arch.homework:30643",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": ""
+		}
+	]
+}
