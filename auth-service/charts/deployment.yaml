@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: 34234247632/auth-service:v1.0
+          image: 34234247632/auth-service:v1.1
           imagePullPolicy: IfNotPresent
           command: ["/app/service"]
           ports:
@@ -42,7 +42,7 @@ spec:
                 name: auth-secrets
       initContainers:
         - name: migrate
-          image: 34234247632/auth-service:v1.0
+          image: 34234247632/auth-service:v1.1
           imagePullPolicy: IfNotPresent
           command: ["/entrypoint-migrate.sh"]
           envFrom:
